@@ -1,34 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Government Primary School Pethgam Wagoora</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Government Primary School Pethgam Wagoora</title>
+<style>
+/* Inline styles (homepage) - keep consistent with your theme */
+:root{
+  --primary:#0056b3; --secondary:#28a745; --accent:#ffc107; --danger:#dc3545;
+  --bg:#f8f9fa; --text:#333;
+}
+*{box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;margin:0;background:var(--bg);color:var(--text);line-height:1.5}
+.header-wrap{border-bottom:3px solid var(--primary);background:#fff}
+.logo-row{display:flex;align-items:center;padding:12px 18px;gap:18px}
+.logo-row img{width:90px;height:90px;border-radius:50%;object-fit:cover}
+.logo-row .title{flex:1}
+.logo-row h1{margin:0;color:var(--primary);font-size:1.6rem}
+.logo-row h2{margin:4px 0 0;color:var(--secondary);font-weight:600;font-size:1rem}
+.contact-info{background:#e9ecef;padding:8px 18px;font-size:0.95rem;border-top:1px solid #ddd}
+.nav{background:var(--primary);padding:10px 14px;overflow-x:auto;white-space:nowrap}
+.nav a{display:inline-block;color:#fff;padding:9px 14px;margin-right:6px;text-decoration:none;border-radius:6px;font-weight:600}
+.nav a:hover{background:#003e86}
+.hero{height:380px;position:relative;overflow:hidden}
+.slides{display:flex;height:100%;width:300%;animation:slide-animation 15s infinite}
+.slide{flex:0 0 100%;background-size:cover;background-position:center;display:flex;align-items:center}
+.slide .content{background:rgba(0,0,0,0.45);color:#fff;padding:18px;border-radius:10px;margin-left:6%;max-width:600px}
+.cta{background:var(--accent);color:#222;padding:8px 14px;border-radius:6px;margin-right:8px;display:inline-block;text-decoration:none;font-weight:700}
+.ticker{display:flex;align-items:center;overflow:hidden;background:var(--accent);padding:8px 12px}
+.ticker .label{background:var(--danger);color:#fff;padding:6px 10px;border-radius:4px;font-weight:700;margin-right:12px}
+.marquee{flex:1;white-space:nowrap;overflow:hidden}
+.marquee p{display:inline-block;padding-left:100%;animation:marquee 20s linear infinite;margin:0}
+@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+@keyframes slide-animation{0%{margin-left:0}30%{margin-left:0}33.33%{margin-left:-100%}63.33%{margin-left:-100%}66.66%{margin-left:-200%}96.66%{margin-left:-200%}100%{margin-left:0}}
+.content-section{max-width:1150px;margin:20px auto;padding:0 18px}
+.quick-links{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;margin-top:14px}
+.card{background:#fff;padding:16px;border-radius:10px;box-shadow:0 3px 10px rgba(0,0,0,0.06);width:calc(25% - 14px);min-width:190px;text-align:center}
+.card .icon{width:48px;height:48px;border-radius:50%;display:inline-block;color:#fff;line-height:48px;margin-bottom:8px}
+.card:nth-child(1) .icon{background:var(--primary)}.card:nth-child(2) .icon{background:var(--secondary)}.card:nth-child(3) .icon{background:var(--accent)}.card:nth-child(4) .icon{background:#17a2b8}
+.news-section{margin-top:20px}
+.news-box{background:#fff;padding:14px;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,0.06)}
+.news-scroller{display:flex;gap:14px;overflow:hidden;animation:news-scroll 28s linear infinite}
+@keyframes news-scroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.heroes{background:#f0f6f9;padding:18px;border-radius:10px;margin-top:18px}
+.scrolling-section{overflow-x:auto;white-space:nowrap;padding:10px 6px}
+.heroes-grid{display:flex;gap:12px}
+.hero-card{display:inline-block;width:150px;background:#fff;padding:10px;border-radius:8px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+.photo-container{width:86px;height:86px;border-radius:50%;overflow:hidden;margin:0 auto 8px;border:3px solid var(--accent)}
+.photo-container img{width:100%;height:100%;object-fit:cover}
+.staff-section{margin-top:18px}
+.staff-split{display:flex;gap:18px;flex-wrap:wrap}
+.staff-block{flex:1;min-width:260px;background:#fff;padding:14px;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,0.06)}
+.staff-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.footer{background:var(--primary);color:#fff;padding:18px;margin-top:28px}
+.footer a{color:#fff;text-decoration:underline}
+@media (max-width:900px){
+ .card{width:calc(50% - 14px)}
+ .logo-row img{width:76px;height:76px}
+ .slides{animation-duration:18s}
+ .hero{height:320px}
+ .staff-split{flex-direction:column}
+}
+</style>
 </head>
 <body>
 
-<header id="main-header">
-    <img src="assets/images/logo.png" class="logo">
+<!-- HEADER -->
+<header class="header-wrap">
+  <div class="logo-row">
+    <img src="assets/images/logo.png" alt="School Logo" onerror="this.style.display='none'">
     <div class="title">
-        <h1>Government Primary School Pethgam Wagoora</h1>
-        <p>UDISE: XXXXXXXX</p>
+      <h1>Government Primary School Pethgam Wagoora</h1>
+      <h2>Wagoora Babareshi Road Near ZEO Office Wagoora</h2>
     </div>
+  </div>
+
+  <div class="contact-info">
+    Phone: <strong>7006261694</strong> | <strong>9596449881</strong> | Email: <strong>pspethgam@gmail.com</strong> | UDISE: <strong>01022202207</strong>
+  </div>
+
+  <nav class="nav" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="admissions.html">Admissions</a>
+    <a href="academics.html">Academics</a>
+    <a href="students.html">Students</a>
+    <a href="teachers.html">Teachers</a>
+    <a href="gallery.html">Gallery</a>
+    <a href="contact.html">Contact</a>
+    <a href="admin.html" style="background:#dc3545">Admin Panel</a>
+  </nav>
 </header>
 
-<section id="announcements"></section>
+<!-- HERO -->
+<section class="hero" aria-label="Hero banner">
+  <div class="slides" id="heroSlides">
+    <div class="slide" style="background-image:url('assets/images/hero1.jpg')">
+      <div class="content">
+        <h2>Welcome to Government Primary School Pethgam Wagoora</h2>
+        <p>Creating a safe, inclusive and learning-focused environment for our children.</p>
+        <div class="cta-row"><a class="cta" href="admissions.html">Apply Online</a><a class="cta" href="students.html">Check Results</a></div>
+      </div>
+    </div>
 
-<section id="principal-message"></section>
+    <div class="slide" style="background-image:url('assets/images/hero2.jpg')">
+      <div class="content">
+        <h2>Holistic education that builds character</h2>
+        <p>Activities, learning material and support for every student.</p>
+        <div class="cta-row"><a class="cta" href="academics.html">Syllabus & Time Table</a></div>
+      </div>
+    </div>
 
-<section id="vision-mission"></section>
+    <div class="slide" style="background-image:url('assets/images/hero3.jpg')">
+      <div class="content">
+        <h2>Community driven progress</h2>
+        <p>Parents, teachers, and local community working together.</p>
+        <div class="cta-row"><a class="cta" href="contact.html">Contact Us</a></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<section id="quick-links"></section>
+<!-- TICKER -->
+<div class="ticker" role="region" aria-label="Latest announcements">
+  <div class="label">Announcements</div>
+  <div class="marquee"><p>Admissions open for Pre Primary 3 to Grade 5 — Apply online | School reopens on 1st November 2025 | Parent-teacher meeting on 10 December 2025 | Winter vacation starts from 1st December 2025.</p></div>
+</div>
 
-<section id="news-events"></section>
+<!-- QUICK LINKS -->
+<section class="content-section">
+  <div class="quick-links">
+    <div class="card"><div class="icon">A</div><h3>Admissions 2025–26</h3><p>Online forms & guidance.</p><a href="admissions.html">Open</a></div>
+    <div class="card"><div class="icon">B</div><h3>Biometric Attendance</h3><p>Teacher & Student attendance portal (Android).</p><a href="students.html">Open</a></div>
+    <div class="card"><div class="icon">S</div><h3>Syllabus & Time Table</h3><p>Download class-wise syllabus.</p><a href="academics.html">Open</a></div>
+    <div class="card"><div class="icon">R</div><h3>Results</h3><p>Academic results & mark sheets.</p><a href="students.html">Open</a></div>
+  </div>
 
-<section id="gallery-preview"></section>
+  <!-- NEWS & EVENTS -->
+  <div class="news-section" style="margin-top:20px">
+    <h3>News & Events</h3>
+    <div class="news-box">
+      <div class="news-scroller" id="newsScroller">
+        <div class="news-item"><strong>Annual Day:</strong> Annual Day celebration next week on school ground.</div>
+        <div class="news-item"><strong>FLN Baseline:</strong> FLN Baseline test from Monday for Grades 1-3.</div>
+        <div class="news-item"><strong>MDM:</strong> Mid-Day Meal weekly menu updated.</div>
+        <!-- repeat to make smooth scroll -->
+        <div class="news-item"><strong>Annual Day:</strong> Annual Day celebration next week on school ground.</div>
+        <div class="news-item"><strong>FLN Baseline:</strong> FLN Baseline test from Monday for Grades 1-3.</div>
+      </div>
+    </div>
+  </div>
 
-<footer></footer>
+  <!-- HEROES -->
+  <div class="heroes" style="margin-top:18px">
+    <h3 style="margin:0 0 12px 0;color:var(--secondary)">🏆 Our Heroes (Student Achievements)</h3>
+    <div class="scrolling-section">
+      <div class="heroes-grid" id="heroesGrid">
+        <!-- sample cards -->
+        <div class="hero-card"><div class="photo-container"><img src="assets/images/hero1.jpg" alt=""></div><strong>Ali</strong><div>Best Reader</div></div>
+        <div class="hero-card"><div class="photo-container"><img src="assets/images/hero2.jpg" alt=""></div><strong>Sara</strong><div>Sports Champion</div></div>
+        <div class="hero-card"><div class="photo-container"><img src="assets/images/hero3.jpg" alt=""></div><strong>Rehan</strong><div>Science Fair Winner</div></div>
+      </div>
+    </div>
+  </div>
 
-<script src="assets/js/main.js"></script>
+  <!-- STAFF split into Teaching & Non-Teaching -->
+  <div class="staff-section" style="margin-top:20px">
+    <h3>🧑‍🏫 Our Teaching & Non-Teaching Staff</h3>
+    <div class="staff-split">
+      <div class="staff-block">
+        <h4 style="color:var(--primary)">Teaching Staff</h4>
+        <div class="staff-grid">
+          <div class="staff-card"><div class="photo-container"><img src="assets/images/staff_ashraf.jpg" alt=""></div><h4>Mohammad Ashraf Rather</h4><p>Head of Institution</p></div>
+          <div class="staff-card"><div class="photo-container"><img src="assets/images/staff_iqbal.jpg" alt=""></div><h4>Mohammad Iqbal Rather</h4><p>Teacher</p></div>
+          <div class="staff-card"><div class="photo-container"><img src="assets/images/staff_zamrooda.jpg" alt=""></div><h4>Zamrooda Bano</h4><p>Teacher</p></div>
+        </div>
+      </div>
+
+      <div class="staff-block">
+        <h4 style="color:var(--primary)">Non-Teaching Staff</h4>
+        <div class="staff-grid">
+          <div class="staff-card"><div class="photo-container"><img src="assets/images/staff_masrat.jpg" alt=""></div><h4>Masrat Begum</h4><p>Aaya</p></div>
+          <div class="staff-card"><div class="photo-container"><img src="assets/images/staff_shaheena.jpg" alt=""></div><h4>Shaheena Bano</h4><p>Cook</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- PRINCIPAL + STATS -->
+<section class="content-section">
+  <div class="two-col">
+    <div class="principal">
+      <h3>Principal's Message</h3>
+      <p>Welcome to Government Primary School Pethgam Wagoora. Our focus is on fostering curiosity, kindness and excellence in every child. We are committed to providing quality education supported by dedicated teachers and essential resources. Parents and community are key partners in this journey.</p>
+      <p><strong>- Mohammad Ashraf Rather (HOI)</strong></p>
+    </div>
+    <div class="stats">
+      <h3>School At A Glance</h3>
+      <div class="stat-grid">
+        <div class="stat-item"><div class="number">50+</div><div class="label">Students Enrolled</div></div>
+        <div class="stat-item"><div class="number">3</div><div class="label">Teachers</div></div>
+        <div class="stat-item"><div class="number">1</div><div class="label">Aaya</div></div>
+        <div class="stat-item"><div class="number">1</div><div class="label">Cook</div></div>
+        <div class="stat-item"><div class="number">3</div><div class="label">Classrooms</div></div>
+        <div class="stat-item"><div class="number">350+</div><div class="label">Library Books</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery preview -->
+<section class="content-section">
+  <h3>Photo Gallery Preview</h3>
+  <div class="scrolling-section">
+    <div class="gallery-grid">
+      <img src="assets/images/gallery1.jpg" alt="Children in classroom" onerror="this.src='https://via.placeholder.com/320x180/0056b3/ffffff?text=Classroom'">
+      <img src="assets/images/gallery2.jpg" alt="School building exterior" onerror="this.src='https://via.placeholder.com/320x180/28a745/ffffff?text=School+Building'">
+      <img src="assets/images/gallery3.jpg" alt="Students playing games" onerror="this.src='https://via.placeholder.com/320x180/ffc107/333333?text=Sports+Day'">
+      <img src="assets/images/gallery4.jpg" alt="Teacher interacting with students" onerror="this.src='https://via.placeholder.com/320x180/17a2b8/ffffff?text=Learning+Activity'">
+      <img src="https://via.placeholder.com/320x180/dc3545/ffffff?text=Culture+Event" alt="Culture Event">
+      <img src="https://via.placeholder.com/320x180/6c757d/ffffff?text=Field+Trip" alt="Field Trip">
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:12px"><a href="gallery.html" style="font-weight:700;color:var(--primary)">View full gallery →</a></p>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div style="max-width:1150px;margin:0 auto;display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between">
+    <div style="min-width:260px">
+      <h4 style="margin:0 0 8px 0">Contact Details</h4>
+      <p style="margin:0">Government Primary School Pethgam Wagoora<br>Address: Pethgam Wagoora, Baramulla, J&K<br>Wagoora Babareshi Road Near ZEO Office Wagoora 193109</p>
+      <p style="margin:6px 0 0 0">Phone: 7006261694 | 9596449881<br>Email: pspethgam@gmail.com</p>
+    </div>
+
+    <div style="min-width:220px">
+      <h4 style="margin:0 0 8px 0">Quick Links</h4>
+      <p style="margin:0"><a href="admissions.html">Admissions</a><br><a href="academics.html">Academics</a><br><a href="contact.html">Contact</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Basic small JS: no external libs
+// Admin link just navigates to admin.html (separate page).
+// Add simple accessibility: allow keyboard focus to slides
+document.addEventListener('DOMContentLoaded', function(){
+  // Nothing needed for homepage aside from existing CSS animations.
+});
+</script>
 </body>
 </html>
