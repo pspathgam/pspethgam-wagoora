@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact — GPS Pethgam Wagoora</title>
+<style>
+:root{--primary:#0056b3;--bg:#f8f9fa}
+body{font-family:Arial;margin:0;background:var(--bg)}
+.header{border-bottom:3px solid var(--primary);background:#fff;padding:12px}
+.container{max-width:900px;margin:18px auto;padding:16px;background:#fff;border-radius:8px;box-shadow:0 3px 8px rgba(0,0,0,0.06)}
+.form-row input, textarea{width:100%;padding:10px;border-radius:6px;border:1px solid #ccc}
+.button{background:var(--primary);color:#fff;padding:10px 14px;border-radius:6px;border:none}
+</style>
+</head>
+<body>
+<header class="header"><div style="max-width:900px;margin:0 auto"><h1 style="margin:0;color:var(--primary)">Contact Us</h1></div></header>
+<nav style="background:var(--primary);padding:10px"><a style="color:#fff;text-decoration:none;padding:8px 12px" href="index.html">Home</a><a style="color:#fff;text-decoration:none;padding:8px 12px" href="contact.html">Contact</a></nav>
+
+<main class="container">
+  <h3>Get in touch</h3>
+  <p><strong>Address:</strong> Pethgam Wagoora, Baramulla, J&K — Wagoora Babareshi Road Near ZEO Office Wagoora 193109</p>
+  <p><strong>Phone:</strong> 7006261694 | 9596449881<br><strong>Email:</strong> pspethgam@gmail.com</p>
+
+  <form id="contactForm">
+    <div style="margin-top:10px">
+      <input id="name" placeholder="Your name" required>
+    </div>
+    <div style="margin-top:10px">
+      <input id="email" placeholder="Email" required>
+    </div>
+    <div style="margin-top:10px">
+      <textarea id="message" rows="5" placeholder="Message" required></textarea>
+    </div>
+    <div style="margin-top:12px"><button class="button" type="submit">Send</button></div>
+    <p id="contactMsg" style="color:green"></p>
+  </form>
+</main>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  document.getElementById('contactMsg').textContent = 'Message sent (demo). We will contact you soon.';
+  this.reset();
+});
+</script>
+
+<footer style="background:var(--primary);color:#fff;padding:14px;text-align:center;margin-top:18px">© 2025 GPS Pethgam Wagoora</footer>
+</body>
+</html>
