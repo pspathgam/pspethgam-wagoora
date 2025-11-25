@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Students — GPS Pethgam Wagoora</title>
+<style>
+:root{--primary:#0056b3;--bg:#f8f9fa}
+body{font-family:Arial;margin:0;background:var(--bg)}
+.header{border-bottom:3px solid var(--primary);background:#fff;padding:12px}
+.nav{background:var(--primary);padding:10px}
+.container{max-width:1100px;margin:18px auto;padding:16px}
+.class-section{background:#fff;padding:14px;border-radius:8px;margin-bottom:14px;box-shadow:0 3px 8px rgba(0,0,0,0.06)}
+.student-list{display:flex;flex-wrap:wrap;gap:12px}
+.student-card{width:160px;background:#fff;border:1px solid #ddd;padding:10px;border-radius:8px;text-align:center}
+.search-row{margin-bottom:12px;display:flex;gap:8px}
+.search-row input{flex:1;padding:8px;border-radius:6px;border:1px solid #ccc}
+</style>
+</head>
+<body>
+<header class="header"><div style="max-width:1100px;margin:0 auto"><h1 style="margin:0;color:var(--primary)">Students</h1></div></header>
+<nav class="nav" style="max-width:1100px;margin:0 auto"><a href="index.html">Home</a><a href="students.html">Students</a></nav>
+
+<main class="container">
+  <div class="search-row">
+    <input id="studentSearch" placeholder="Search student name or admission no">
+    <button onclick="doSearch()">Search</button>
+  </div>
+
+  <!-- Class 1 -->
+  <section class="class-section" id="class1">
+    <h3>Class 1</h3>
+    <div class="student-list" id="class1List">
+      <div class="student-card"><div style="height:80px"><img src="https://via.placeholder.com/80" alt=""></div><strong>Ad 001</strong><div>Ali</div></div>
+      <div class="student-card"><div style="height:80px"><img src="https://via.placeholder.com/80" alt=""></div><strong>Ad 002</strong><div>Sara</div></div>
+    </div>
+  </section>
+
+  <!-- Class 2 -->
+  <section class="class-section" id="class2">
+    <h3>Class 2</h3>
+    <div class="student-list" id="class2List">
+      <div class="student-card"><div style="height:80px"><img src="https://via.placeholder.com/80" alt=""></div><strong>Ad 010</strong><div>Rehan</div></div>
+      <div class="student-card"><div style="height:80px"><img src="https://via.placeholder.com/80" alt=""></div><strong>Ad 011</strong><div>Zara</div></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+function doSearch(){
+  const q = document.getElementById('studentSearch').value.toLowerCase();
+  const cards = document.querySelectorAll('.student-card');
+  cards.forEach(c=>{
+    const text = c.textContent.toLowerCase();
+    c.style.display = text.includes(q) ? '' : 'none';
+  });
+}
+</script>
+
+<footer style="background:var(--primary);color:#fff;padding:14px;text-align:center">© 2025 GPS Pethgam Wagoora</footer>
+</body>
+</html>
