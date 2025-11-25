@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admissions — GPS Pethgam Wagoora</title>
+<style>
+:root{--primary:#0056b3;--bg:#f8f9fa}
+body{font-family:Arial;margin:0;background:var(--bg)}
+.header{border-bottom:3px solid var(--primary);background:#fff;padding:12px}
+.nav{background:var(--primary);padding:10px}
+.nav a{color:#fff;padding:8px 12px;text-decoration:none;border-radius:6px}
+.content{max-width:900px;margin:18px auto;padding:16px}
+.card{background:#fff;padding:16px;border-radius:8px;box-shadow:0 3px 8px rgba(0,0,0,0.06)}
+.form-row{display:flex;gap:10px;flex-wrap:wrap}
+.form-row input, .form-row select, textarea{width:100%;padding:8px;border:1px solid #ccc;border-radius:6px}
+.button{background:var(--primary);color:#fff;padding:10px 14px;border-radius:6px;border:none}
+</style>
+</head>
+<body>
+<header class="header"><div style="max-width:1000px;margin:0 auto"><h1 style="margin:0;color:var(--primary)">Admissions</h1></div></header>
+<nav class="nav" style="max-width:1000px;margin:0 auto"><a href="index.html">Home</a><a href="admissions.html">Admissions</a></nav>
+
+<main class="content">
+  <div class="card">
+    <h3>Apply Online — Admissions 2025–26</h3>
+    <p>Fill the form below and submit required documents at the school office.</p>
+    <form id="admissionForm">
+      <div class="form-row">
+        <input name="student_name" placeholder="Student Name" required>
+        <input name="dob" placeholder="Date of Birth (DD-MM-YYYY)" required>
+        <input name="father_name" placeholder="Father's Name">
+        <input name="mother_name" placeholder="Mother's Name">
+        <select name="class"><option>Class 1</option><option>Class 2</option><option>Class 3</option></select>
+      </div>
+      <div style="margin-top:12px">
+        <button class="button" type="submit">Submit Application</button>
+      </div>
+    </form>
+    <p id="admitMsg" style="color:green;margin-top:10px"></p>
+  </div>
+</main>
+
+<script>
+document.getElementById('admissionForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  document.getElementById('admitMsg').textContent = 'Application submitted (demo). Please visit school office to complete process.';
+  this.reset();
+});
+</script>
+
+<footer style="background:var(--primary);color:#fff;padding:14px;text-align:center;margin-top:20px">© 2025 GPS Pethgam Wagoora</footer>
+</body>
+</html>
