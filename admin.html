@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin — GPS Pethgam Wagoora</title>
+<style>
+:root{--primary:#0056b3;--bg:#f8f9fa}
+body{font-family:Arial;margin:0;background:var(--bg)}
+.header{border-bottom:3px solid var(--primary);background:#fff;padding:12px}
+.container{max-width:900px;margin:18px auto;padding:16px}
+.card{background:#fff;padding:16px;border-radius:8px;box-shadow:0 3px 8px rgba(0,0,0,0.06)}
+.input{width:100%;padding:10px;border-radius:6px;border:1px solid #ccc;margin-bottom:8px}
+.button{background:var(--primary);color:#fff;padding:10px 14px;border-radius:6px;border:none}
+.dashboard{display:flex;gap:12px;flex-wrap:wrap}
+.dash-card{background:#fff;padding:12px;border-radius:8px;min-width:200px;box-shadow:0 2px 6px rgba(0,0,0,0.06)}
+</style>
+</head>
+<body>
+<header class="header"><div style="max-width:900px;margin:0 auto"><h1 style="margin:0;color:var(--primary)">Admin Panel</h1></div></header>
+<nav style="background:var(--primary);padding:10px;max-width:900px;margin:0 auto"><a style="color:#fff;text-decoration:none;padding:8px 12px" href="index.html">Home</a><a style="color:#fff;text-decoration:none;padding:8px 12px" href="admin.html">Admin</a></nav>
+
+<main class="container">
+  <div class="card">
+    <h3>Admin Login</h3>
+    <form id="loginForm">
+      <input id="user" class="input" placeholder="Username" required>
+      <input id="pass" class="input" placeholder="Password" type="password" required>
+      <button class="button" type="submit">Login</button>
+    </form>
+    <p id="adminMsg" style="color:green"></p>
+  </div>
+
+  <div id="dashboard" style="display:none;margin-top:16px">
+    <h3>Dashboard (Demo)</h3>
+    <div class="dashboard">
+      <div class="dash-card"><strong>Total Students</strong><div style="font-size:20px">50+</div></div>
+      <div class="dash-card"><strong>Teachers</strong><div style="font-size:20px">3</div></div>
+      <div class="dash-card"><strong>MDM Stock</strong><div style="font-size:20px">Good</div></div>
+    </div>
+  </div>
+</main>
+
+<script>
+document.getElementById('loginForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const u=document.getElementById('user').value, p=document.getElementById('pass').value;
+  if(u==='admin' && p==='admin123'){
+    document.getElementById('adminMsg').textContent='Login successful';
+    document.getElementById('dashboard').style.display='block';
+  } else {
+    document.getElementById('adminMsg').textContent='Invalid credentials';
+  }
+});
+</script>
+
+<footer style="background:var(--primary);color:#fff;padding:14px;text-align:center;margin-top:18px">© 2025 GPS Pethgam Wagoora</footer>
+</body>
+</html>
