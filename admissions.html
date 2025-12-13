@@ -34,8 +34,9 @@
             color: #007bff;
         }
         .form-grid {
+            /* Adjusted min-width to accommodate 3 columns in the documents section */
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Adjusted min-width for more fields */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
             gap: 20px;
         }
         .form-group {
@@ -54,14 +55,14 @@
             box-sizing: border-box;
         }
         .warning-message {
-            color: #dc3545; /* Red color for warnings */
+            color: #dc3545;
             background-color: #f8d7da;
             border: 1px solid #f5c6cb;
             padding: 10px;
             border-radius: 5px;
             font-weight: bold;
             margin-top: 15px;
-            display: none; /* Controlled by JS */
+            display: none;
         }
         .submit-btn-container {
             text-align: center;
@@ -84,7 +85,6 @@
             color: #dc3545;
             margin-left: 3px;
         }
-        /* Style for the declaration text */
         .declaration-text {
             border: 1px solid #007bff;
             padding: 15px;
@@ -92,6 +92,10 @@
             background-color: #f7faff;
             font-size: 0.9em;
             margin-top: 20px;
+        }
+        /* Specific styling for photo upload area */
+        .photo-upload-group {
+            grid-column: 1 / -1; /* Take full width */
         }
     </style>
 </head>
@@ -281,6 +285,11 @@
                 <p>These files will be merged into your final submission packet. Upload clear copies only.</p>
                 
                 <div class="form-grid">
+                    <div class="form-group photo-upload-group">
+                        <label for="uploadPhoto">Passport Size Student Photograph <span class="required-star">*</span></label>
+                        <input type="file" id="uploadPhoto" name="uploadPhoto" accept=".jpg, .jpeg, .png" required>
+                    </div>
+
                     <div class="form-group">
                         <label for="uploadBirthCert">Birth Certificate (Registrar Births & Deaths) <span class="required-star">*</span></label>
                         <input type="file" id="uploadBirthCert" name="uploadBirthCert" accept=".pdf, .jpg, .jpeg" required>
@@ -336,7 +345,6 @@
             let ageInYears = CUTOFF_DATE.getFullYear() - studentDob.getFullYear();
             const m = CUTOFF_DATE.getMonth() - studentDob.getMonth();
             
-            // Adjust age if the birth date hasn't occurred yet in the cutoff year
             if (m < 0 || (m === 0 && CUTOFF_DATE.getDate() < studentDob.getDate())) {
                 ageInYears--;
             }
@@ -359,7 +367,6 @@
                 return;
             }
 
-            // Only check age for classes with defined requirements
             if (AGE_REQUIREMENTS[classValue]) {
                 const ageInYears = calculateAge(dobValue);
                 const minAge = AGE_REQUIREMENTS[classValue];
@@ -371,7 +378,7 @@
                 } else if (ageInYears > minAge + 2 && classValue.startsWith('class')) { 
                     warningDiv.innerHTML = `⚠️ **Age Caution:** Student age (${ageInYears}) seems high for ${classValue.toUpperCase()}. Please verify the DOB or contact the school office.`;
                     warningDiv.style.display = 'block';
-                    submitButton.disabled = false; // Allow submission but flag caution
+                    submitButton.disabled = false;
                 } else {
                     warningDiv.innerHTML = `✅ **Age Check Passed:** Student will be **${ageInYears} years** old on Nov 1, 2025.`;
                     warningDiv.style.display = 'block';
@@ -382,59 +389,184 @@
 
         function toggleTransferFields() {
             const type = document.getElementById('admissionType').value;
-            const penField = document.getElementById('pen-field');
+            const transferFields = document.querySelectorAll('.transfer-field');
             const penInput = document.getElementById('studentPenNo');
-            const tcField = document.getElementById('tc-field');
             const tcInput = document.getElementById('uploadTC');
 
             if (type === 'transfer') {
-                penField.style.display = 'block';
-                tcField.style.display = 'block';
+                transferFields.forEach(field => field.style.display = 'block');
                 penInput.setAttribute('required', 'required');
                 tcInput.setAttribute('required', 'required');
             } else {
-                penField.style.display = 'none';
-                tcField.style.display = 'none';
+                transferFields.forEach(field => field.style.display = 'none');
                 penInput.removeAttribute('required');
                 tcInput.removeAttribute('required');
                 penInput.value = ''; 
                 tcInput.value = ''; 
             }
         }
+        
+        // --- MAIN PDF GENERATION LOGIC (Blueprint for Developer) ---
+        async function generateUnifiedPDF(formData) {
+            const doc = new jsPDF('p', 'mm', 'a4'); // A4 size, millimeters
+            let y = 10;
+            const lineHeight = 7;
+            const pageWidth = 210;
+            const margin = 15;
+            const data = {};
+            
+            // 1. COLLECT ALL FORM DATA (simple key-value pairs)
+            formData.forEach((value, key) => data[key] = value);
 
-        // DOMContentLoaded setup
+            // -------------------------------------------------------------
+            // A. PAGE 1: ADMISSION FORM (Populate data on a custom template)
+            // -------------------------------------------------------------
+            doc.setFontSize(16);
+            doc.text("Government Primary School Admission Form", pageWidth / 2, y, { align: "center" });
+            y += lineHeight;
+            
+            doc.setFontSize(10);
+            y += lineHeight / 2;
+            doc.text(`Student Name: ${data.studentName}`, margin, y);
+            doc.text(`DOB: ${data.dob}`, pageWidth / 2, y);
+            y += lineHeight;
+
+            doc.text(`Father's Name: ${data.fatherName}`, margin, y);
+            doc.text(`Mother's Name: ${data.motherName}`, pageWidth / 2, y);
+            y += lineHeight;
+
+            // ... Draw all other fields from Section 2 using doc.text() based on your template layout ...
+
+            // Draw the Declaration Text Box (Simplified)
+            y += lineHeight * 2;
+            doc.rect(margin, y, pageWidth - margin * 2, 30);
+            doc.text("Parent's Declaration (Agreed on portal):", margin + 2, y + 4);
+            doc.text("I hereby declare that the information is true and consent to Aadhaar authentication.", margin + 2, y + 10);
+            y += 35;
+
+
+            // ----------------------------------------------------------------
+            // B. PAGE 2: APPAR CONSENT FORM (Start New Page)
+            // ----------------------------------------------------------------
+            doc.addPage();
+            y = 10;
+            doc.setFontSize(16);
+            doc.text("APPAR ID Generation Consent Form", pageWidth / 2, y, { align: "center" });
+            y += lineHeight * 2;
+            
+            doc.setFontSize(10);
+            doc.text(`Student Name: ${data.studentName}`, margin, y);
+            doc.text(`Student Aadhaar: ${data.studentAadhaar}`, pageWidth / 2, y);
+            y += lineHeight;
+            
+            doc.text(`Parent Proof Used: ${data.parentConsentProof}`, margin, y);
+            doc.text(`Proof Number: ${data.parentProofNumber}`, pageWidth / 2, y);
+            y += lineHeight;
+
+            // Draw the full consent text box here.
+
+            // ----------------------------------------------------------------
+            // C. PAGE 3+: UPLOADED DOCUMENTS (Merge Files)
+            // ----------------------------------------------------------------
+            const uploadedFiles = [
+                'uploadPhoto', 
+                'uploadBirthCert', 
+                'uploadBloodReport', 
+                'uploadStudentAadhaar', 
+                'uploadParentAadhaar'
+            ];
+            if (data.admissionType === 'transfer') {
+                uploadedFiles.push('uploadTC');
+            }
+
+            for (const fileKey of uploadedFiles) {
+                const fileInput = document.getElementById(fileKey);
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const fileReader = new FileReader();
+
+                    await new Promise((resolve) => {
+                        fileReader.onload = (e) => {
+                            doc.addPage();
+                            doc.setFontSize(12);
+                            doc.text(`--- Attached Document: ${file.name} (${fileKey}) ---`, margin, 10);
+                            
+                            // *** DEVELOPER NOTE: PDF and Image handling logic goes here ***
+                            // For images (.jpg, .png), draw the image onto the page:
+                            // doc.addImage(e.target.result, 'JPEG/PNG', margin, 20, 180, 250); 
+                            
+                            // For PDFs, advanced libraries (like PDF-Lib with jsPDF) or external services 
+                            // are usually needed to merge them correctly. Simply reading the file 
+                            // won't automatically embed the PDF content. This part is the most difficult 
+                            // step for pure client-side solutions.
+
+                            resolve();
+                        };
+
+                        if (file.type.startsWith('image/')) {
+                            fileReader.readAsDataURL(file); // For images
+                        } else if (file.type === 'application/pdf') {
+                            fileReader.readAsArrayBuffer(file); // For PDFs
+                        }
+                        
+                    });
+                }
+            }
+
+
+            // -------------------------------------------------------------
+            // D. FINALIZE AND DOWNLOAD
+            // -------------------------------------------------------------
+            doc.save(`Admission_Packet_${data.studentName.replace(/\s/g, '_')}_2026.pdf`);
+            alert("Success! Your Unified PDF Packet has been generated and downloaded. Please print this packet for hard copy submission.");
+        }
+
+
+        // --- EVENT HANDLERS ---
         document.addEventListener('DOMContentLoaded', () => {
-            // Update declaration name dynamically
             const fatherNameInput = document.getElementById('fatherName');
             const declarationNameSpan = document.getElementById('declarationParentName');
 
             fatherNameInput.addEventListener('input', () => {
-                // Use Father's name for the declaration text
                 declarationNameSpan.textContent = fatherNameInput.value || '[Father/Mother Name]';
             });
 
-            // Initial checks and state setup
             toggleTransferFields();
             checkAge();
         });
 
-        // Event listeners for eligibility check
         document.getElementById('dob').addEventListener('change', checkAge);
         document.getElementById('classApplied').addEventListener('change', checkAge);
         
-        // Ensure form cannot be submitted if age check failed
+        // ** CRITICAL: Change from server submission to client-side JS function call **
         document.getElementById('combinedAdmissionForm').addEventListener('submit', function(event) {
-            if (document.getElementById('submitButton').disabled) {
-                event.preventDefault();
-                alert("Cannot submit: Age eligibility requirements are not met for the selected class.");
+            event.preventDefault(); // Stop the default browser submission
+            
+            const submitButton = document.getElementById('submitButton');
+            
+            if (submitButton.disabled) {
+                alert("Cannot submit: Age eligibility requirements are not met.");
                 document.getElementById('ageWarning').scrollIntoView();
+                return;
             }
+            
+            if (!this.checkValidity()) {
+                 alert("Please fill out all required fields.");
+                 return;
+            }
+
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
+            submitButton.disabled = true;
+
+            const formData = new FormData(this);
+            
+            // Execute the client-side PDF generation
+            generateUnifiedPDF(formData).finally(() => {
+                submitButton.innerHTML = '<i class="fas fa-file-download"></i> Submit Application & Generate Unified PDF Packet';
+                submitButton.disabled = false;
+            });
         });
 
     </script>
     </body>
 </html>
-
-
-
-                  
