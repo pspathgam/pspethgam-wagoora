@@ -517,56 +517,9 @@
             // -------------------------------------------------------------
             // D. FINALIZE AND DOWNLOAD
             // -------------------------------------------------------------
-            doc.save(`Admission_Packet_${data.studentName.replace(/\s/g, '_')}_2026.pdf`);
-            alert("Success! Your Unified PDF Packet has been generated and downloaded. Please print this packet for hard copy submission.");
-        }
-
-
-        // --- EVENT HANDLERS ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const fatherNameInput = document.getElementById('fatherName');
-            const declarationNameSpan = document.getElementById('declarationParentName');
-
-            fatherNameInput.addEventListener('input', () => {
-                declarationNameSpan.textContent = fatherNameInput.value || '[Father/Mother Name]';
-            });
-
-            toggleTransferFields();
-            checkAge();
-        });
-
-        document.getElementById('dob').addEventListener('change', checkAge);
-        document.getElementById('classApplied').addEventListener('change', checkAge);
-        
-        // ** CRITICAL: Change from server submission to client-side JS function call **
-        document.getElementById('combinedAdmissionForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Stop the default browser submission
-            
-            const submitButton = document.getElementById('submitButton');
-            
-            if (submitButton.disabled) {
-                alert("Cannot submit: Age eligibility requirements are not met.");
-                document.getElementById('ageWarning').scrollIntoView();
-                return;
-            }
-            
-            if (!this.checkValidity()) {
-                 alert("Please fill out all required fields.");
-                 return;
-            }
-
-            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating PDF...';
-            submitButton.disabled = true;
-
-            const formData = new FormData(this);
-            
-            // Execute the client-side PDF generation
-            generateUnifiedPDF(formData).finally(() => {
-                submitButton.innerHTML = '<i class="fas fa-file-download"></i> Submit Application & Generate Unified PDF Packet';
-                submitButton.disabled = false;
-            });
-        });
-
-    </script>
+            doc.save(`Admission_Packet_${data.studentName.repla    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    
+    <script src="js/admission-generator.js"></script>
+    
     </body>
 </html>
