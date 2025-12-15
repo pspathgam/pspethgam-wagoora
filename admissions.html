@@ -34,7 +34,6 @@
             color: #007bff;
         }
         .form-grid {
-            /* Adjusted min-width to accommodate 3 columns in the documents section */
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
             gap: 20px;
@@ -280,247 +279,53 @@
                     </label>
                 </div>
             </div>
-<div class="form-section">
-    <h3>4. Document Upload (PDF/JPG/PNG)</h3>
-    <p>These files will be merged into your final submission packet. Upload clear copies only.</p>
-    
-    <div class="form-grid">
-        <div class="form-group photo-upload-group">
-            <label for="uploadPhoto">Passport Size Student Photograph <span class="required-star">*</span></label>
-            <input type="file" id="uploadPhoto" name="uploadPhoto" accept=".jpg, .jpeg, .png" required>
-        </div>
 
-        <div class="form-group">
-            <label for="uploadBirthCert">Birth Certificate (Registrar Births & Deaths) <span class="required-star">*</span></label>
-            <input type="file" id="uploadBirthCert" name="uploadBirthCert" accept=".pdf, .jpg, .jpeg, .png" required>
-        </div>
-        <div class="form-group">
-            <label for="uploadBloodReport">Blood Group Report <span class="required-star">*</span></label>
-            <input type="file" id="uploadBloodReport" name="uploadBloodReport" accept=".pdf, .jpg, .jpeg, .png" required>
-        </div>
-        <div class="form-group">
-            <label for="uploadStudentAadhaar">Student Aadhaar Card <span class="required-star">*</span></label>
-            <input type="file" id="uploadStudentAadhaar" name="uploadStudentAadhaar" accept=".pdf, .jpg, .jpeg, .png" required>
-        </div>
-        <div class="form-group">
-            <label for="uploadParentAadhaar">Parent Aadhaar Card <span class="required-star">*</span></label>
-            <input type="file" id="uploadParentAadhaar" name="uploadParentAadhaar" accept=".pdf, .jpg, .jpeg, .png" required>
-        </div>
-        <div class="form-group transfer-field" id="tc-field" style="display:none;">
-            <label for="uploadTC">Transfer Certificate (TC) <span class="required-star">*</span></label>
-            <input type="file" id="uploadTC" name="uploadTC" accept=".pdf, .jpg, .jpeg, .png">
-        </div>
+            <div class="form-section">
+                <h3>4. Document Upload (PDF/JPG/PNG)</h3>
+                <p>These files will be merged into your final submission packet. Upload clear copies only.</p>
+                
+                <div class="form-grid">
+                    <div class="form-group photo-upload-group">
+                        <label for="uploadPhoto">Passport Size Student Photograph <span class="required-star">*</span></label>
+                        <input type="file" id="uploadPhoto" name="uploadPhoto" accept=".jpg, .jpeg, .png" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="uploadBirthCert">Birth Certificate (Registrar Births & Deaths) <span class="required-star">*</span></label>
+                        <input type="file" id="uploadBirthCert" name="uploadBirthCert" accept=".pdf, .jpg, .jpeg, .png" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="uploadBloodReport">Blood Group Report <span class="required-star">*</span></label>
+                        <input type="file" id="uploadBloodReport" name="uploadBloodReport" accept=".pdf, .jpg, .jpeg, .png" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="uploadStudentAadhaar">Student Aadhaar Card <span class="required-star">*</span></label>
+                        <input type="file" id="uploadStudentAadhaar" name="uploadStudentAadhaar" accept=".pdf, .jpg, .jpeg, .png" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="uploadParentAadhaar">Parent Aadhaar Card <span class="required-star">*</span></label>
+                        <input type="file" id="uploadParentAadhaar" name="uploadParentAadhaar" accept=".pdf, .jpg, .jpeg, .png" required>
+                    </div>
+                    <div class="form-group transfer-field" id="tc-field" style="display:none;">
+                        <label for="uploadTC">Transfer Certificate (TC) <span class="required-star">*</span></label>
+                        <input type="file" id="uploadTC" name="uploadTC" accept=".pdf, .jpg, .jpeg, .png">
+                    </div>
+                </div>
+            </div>
+
+            <div class="submit-btn-container">
+                <button type="submit" class="submit-btn" id="submitButton">
+                    <i class="fas fa-file-download"></i> Submit Application & Generate Unified PDF Packet
+                </button>
+            </div>
+
+        </form>
     </div>
-</div>
 
-<div class="submit-btn-container">
-    <button type="submit" class="submit-btn" id="submitButton">
-        <i class="fas fa-file-download"></i> Submit Application & Generate Unified PDF Packet
-    </button>
-</div>
-
-</form>
-</div>
-
-
-    <script>
-        // Admission year is 2026, so the preceding year is 2025.
-        // Cutoff date is November 1st, 2025.
-        const CUTOFF_DATE = new Date('2025-11-01');
-
-        // Age requirements (Min Age in years as of CUTOFF_DATE)
-        const AGE_REQUIREMENTS = {
-            'pp3': 3,       
-            'pp2': 4,       
-            'balvatika': 5, 
-            'class1': 6,
-            'class2': 7,
-            'class3': 8,
-            'class4': 9,
-            'class5': 10
-        };
-
-        function calculateAge(dob) {
-            const studentDob = new Date(dob);
-            
-            let ageInYears = CUTOFF_DATE.getFullYear() - studentDob.getFullYear();
-            const m = CUTOFF_DATE.getMonth() - studentDob.getMonth();
-            
-            if (m < 0 || (m === 0 && CUTOFF_DATE.getDate() < studentDob.getDate())) {
-                ageInYears--;
-            }
-            return ageInYears;
-        }
-
-        function checkAge() {
-            const dobInput = document.getElementById('dob');
-            const classInput = document.getElementById('classApplied');
-            const warningDiv = document.getElementById('ageWarning');
-            const submitButton = document.getElementById('submitButton');
-
-            const dobValue = dobInput.value;
-            const classValue = classInput.value;
-            
-            warningDiv.style.display = 'none';
-            submitButton.disabled = false;
-
-            if (!dobValue || !classValue) {
-                return;
-            }
-
-            if (AGE_REQUIREMENTS[classValue]) {
-                const ageInYears = calculateAge(dobValue);
-                const minAge = AGE_REQUIREMENTS[classValue];
-
-                if (ageInYears < minAge) {
-                    warningDiv.innerHTML = `⚠️ **Ineligible for Admission:** The student must be at least **${minAge} years** old as of Nov 1, 2025, for **${classValue.toUpperCase()}**. Current age: ${ageInYears} years.`;
-                    warningDiv.style.display = 'block';
-                    submitButton.disabled = true;
-                } else if (ageInYears > minAge + 2 && classValue.startsWith('class')) { 
-                    warningDiv.innerHTML = `⚠️ **Age Caution:** Student age (${ageInYears}) seems high for ${classValue.toUpperCase()}. Please verify the DOB or contact the school office.`;
-                    warningDiv.style.display = 'block';
-                    submitButton.disabled = false;
-                } else {
-                    warningDiv.innerHTML = `✅ **Age Check Passed:** Student will be **${ageInYears} years** old on Nov 1, 2025.`;
-                    warningDiv.style.display = 'block';
-                    submitButton.disabled = false;
-                }
-            }
-        }
-
-        function toggleTransferFields() {
-            const type = document.getElementById('admissionType').value;
-            const transferFields = document.querySelectorAll('.transfer-field');
-            const penInput = document.getElementById('studentPenNo');
-            const tcInput = document.getElementById('uploadTC');
-
-            if (type === 'transfer') {
-                transferFields.forEach(field => field.style.display = 'block');
-                penInput.setAttribute('required', 'required');
-                tcInput.setAttribute('required', 'required');
-            } else {
-                transferFields.forEach(field => field.style.display = 'none');
-                penInput.removeAttribute('required');
-                tcInput.removeAttribute('required');
-                penInput.value = ''; 
-                tcInput.value = ''; 
-            }
-        }
-        
-        // --- MAIN PDF GENERATION LOGIC (Blueprint for Developer) ---
-        async function generateUnifiedPDF(formData) {
-            const doc = new jsPDF('p', 'mm', 'a4'); // A4 size, millimeters
-            let y = 10;
-            const lineHeight = 7;
-            const pageWidth = 210;
-            const margin = 15;
-            const data = {};
-            
-            // 1. COLLECT ALL FORM DATA (simple key-value pairs)
-            formData.forEach((value, key) => data[key] = value);
-
-            // -------------------------------------------------------------
-            // A. PAGE 1: ADMISSION FORM (Populate data on a custom template)
-            // -------------------------------------------------------------
-            doc.setFontSize(16);
-            doc.text("Government Primary School Admission Form", pageWidth / 2, y, { align: "center" });
-            y += lineHeight;
-            
-            doc.setFontSize(10);
-            y += lineHeight / 2;
-            doc.text(`Student Name: ${data.studentName}`, margin, y);
-            doc.text(`DOB: ${data.dob}`, pageWidth / 2, y);
-            y += lineHeight;
-
-            doc.text(`Father's Name: ${data.fatherName}`, margin, y);
-            doc.text(`Mother's Name: ${data.motherName}`, pageWidth / 2, y);
-            y += lineHeight;
-
-            // ... Draw all other fields from Section 2 using doc.text() based on your template layout ...
-
-            // Draw the Declaration Text Box (Simplified)
-            y += lineHeight * 2;
-            doc.rect(margin, y, pageWidth - margin * 2, 30);
-            doc.text("Parent's Declaration (Agreed on portal):", margin + 2, y + 4);
-            doc.text("I hereby declare that the information is true and consent to Aadhaar authentication.", margin + 2, y + 10);
-            y += 35;
-
-
-            // ----------------------------------------------------------------
-            // B. PAGE 2: APPAR CONSENT FORM (Start New Page)
-            // ----------------------------------------------------------------
-            doc.addPage();
-            y = 10;
-            doc.setFontSize(16);
-            doc.text("APPAR ID Generation Consent Form", pageWidth / 2, y, { align: "center" });
-            y += lineHeight * 2;
-            
-            doc.setFontSize(10);
-            doc.text(`Student Name: ${data.studentName}`, margin, y);
-            doc.text(`Student Aadhaar: ${data.studentAadhaar}`, pageWidth / 2, y);
-            y += lineHeight;
-            
-            doc.text(`Parent Proof Used: ${data.parentConsentProof}`, margin, y);
-            doc.text(`Proof Number: ${data.parentProofNumber}`, pageWidth / 2, y);
-            y += lineHeight;
-
-            // Draw the full consent text box here.
-
-            // ----------------------------------------------------------------
-            // C. PAGE 3+: UPLOADED DOCUMENTS (Merge Files)
-            // ----------------------------------------------------------------
-            const uploadedFiles = [
-                'uploadPhoto', 
-                'uploadBirthCert', 
-                'uploadBloodReport', 
-                'uploadStudentAadhaar', 
-                'uploadParentAadhaar'
-            ];
-            if (data.admissionType === 'transfer') {
-                uploadedFiles.push('uploadTC');
-            }
-
-            for (const fileKey of uploadedFiles) {
-                const fileInput = document.getElementById(fileKey);
-                if (fileInput.files.length > 0) {
-                    const file = fileInput.files[0];
-                    const fileReader = new FileReader();
-
-                    await new Promise((resolve) => {
-                        fileReader.onload = (e) => {
-                            doc.addPage();
-                            doc.setFontSize(12);
-                            doc.text(`--- Attached Document: ${file.name} (${fileKey}) ---`, margin, 10);
-                            
-                            // *** DEVELOPER NOTE: PDF and Image handling logic goes here ***
-                            // For images (.jpg, .png), draw the image onto the page:
-                            // doc.addImage(e.target.result, 'JPEG/PNG', margin, 20, 180, 250); 
-                            
-                            // For PDFs, advanced libraries (like PDF-Lib with jsPDF) or external services 
-                            // are usually needed to merge them correctly. Simply reading the file 
-                            // won't automatically embed the PDF content. This part is the most difficult 
-                            // step for pure client-side solutions.
-
-                            resolve();
-                        };
-
-                        if (file.type.startsWith('image/')) {
-                            fileReader.readAsDataURL(file); // For images
-                        } else if (file.type === 'application/pdf') {
-                            fileReader.readAsArrayBuffer(file); // For PDFs
-                        }
-                        
-                    });
-                }
-            }
-
-
-            // -------------------------------------------------------------
-            // D. FINALIZE AND DOWNLOAD
-            // -------------------------------------------------------------
-            doc.save(`Admission_Packet_${data.studentName.repla    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     
-    <script src="js/admission-generator.js"></script>
-    
+    <script src="js/admission-generator.js">
+    </script>
     </body>
-</html>
+   </html>
+        
